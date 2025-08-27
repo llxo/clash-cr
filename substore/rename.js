@@ -1,5 +1,5 @@
 /**
- * 更新日期：2025-08-23
+ * 更新日期：2025-08-29
  * 用法：Sub-Store 脚本操作添加
  * 修改自：https://github.com/Keywos/rule/blob/main/rename.js
  * rename.js 以下是此脚本支持的参数，必须以 # 为开头多个参数使用"&"连接，参考上述地址为例使用参数。 禁用缓存url#noCache
@@ -53,10 +53,10 @@ const nx = inArg.nx || false,
   blgd = inArg.blgd || false,
   blpx = inArg.blpx || false,
   blnx = inArg.blnx || false,
-  numone = inArg.one || false,
+  numone = inArg.one == undefined ? true : inArg.one,
   debug = inArg.debug || false,
   clear = inArg.clear || false,
-  addflag = inArg.flag || false,
+  addflag = inArg.flag == undefined ? true : inArg.flag,
   nm = inArg.nm || false;
 const FGF = inArg.fgf == undefined ? "" : decodeURI(inArg.fgf),
   XHFGF = inArg.sn == undefined ? " " : decodeURI(inArg.sn),
