@@ -18,7 +18,7 @@
  * [out=]   输出节点名可选参数: (cn或zh ，us或en ，gq或flag ，quan) 对应：(中文，英文缩写 ，国旗 ，英文全称) 默认中文 例如 [out=en] 或 out=us 输出英文缩写
  *** 分隔符参数
  *
- * [fgf=]   节点名前缀或国旗分隔符，默认为空；
+ * [fgf=]   国旗分隔符，默认为空；
  * [sn=]    设置国家与序号之间的分隔符，默认为空格；
  * [nsep=]  机场名称专用分隔符，默认 " | "
  * 
@@ -289,7 +289,7 @@ function operator(pro) {
       // When airport name exists, use NSEP between name and adjacent parts.
       // Build components and join carefully to respect different separators.
       const parts = [];
-  if (firstName) parts.push(firstName + (NSEP || ""));
+      if (firstName) parts.push(firstName + (NSEP || ""));
       if (usflag) parts.push(usflag);
 
       if (nNames) {
@@ -298,12 +298,19 @@ function operator(pro) {
         parts.push(nNames + (NSEP || ""));
       }
 
-      // push region value
-      parts.push(findKeyValue);
-
-      if (retainKey) parts.push(retainKey);
-      if (ikey) parts.push(ikey);
-      if (ikeys) parts.push(ikeys);
+      // 构建地区名称，包含附加信息
+      let regionNameWithExtras = findKeyValue;
+      const extras = [];
+      if (retainKey) extras.push(retainKey);
+      if (ikey) extras.push(ikey);
+      if (ikeys) extras.push(ikeys);
+      
+      // 将附加信息直接拼接到地区名称后，不使用主分隔符
+      if (extras.length > 0) {
+        regionNameWithExtras += extras.join('');
+      }
+      
+      parts.push(regionNameWithExtras);
 
       // if endName set, store it temporarily on the proxy to append after numbering
       if (endName) {
